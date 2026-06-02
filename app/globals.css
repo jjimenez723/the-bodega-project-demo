@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: #f8f6ee;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: #173d2b;
+  background:
+    radial-gradient(circle at 8% 2%, rgba(226, 242, 223, 0.9), transparent 24rem),
+    #f8f6ee;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.55;
+  }
+  75%,
+  100% {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+.map-ring {
+  animation: pulse-ring 2.4s ease-out infinite;
+}
