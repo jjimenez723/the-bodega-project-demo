@@ -1,6 +1,6 @@
 import { Clock3, MapPin } from "lucide-react";
 import { Listing } from "@/lib/data";
-import { ProduceIcon } from "@/components/produce-icon";
+import { ProducePhoto } from "@/components/produce-photo";
 
 export function CropCard({
   listing,
@@ -21,7 +21,10 @@ export function CropCard({
       }`}
     >
       <div className="flex gap-3.5">
-        <ProduceIcon category={listing.category} accent={listing.accent} />
+        <div className="relative h-20 w-24 shrink-0 overflow-hidden rounded-[1.1rem] bg-sand">
+          <ProducePhoto listing={listing} />
+          <div className="absolute inset-0 ring-1 ring-inset ring-white/50" />
+        </div>
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
             <div>

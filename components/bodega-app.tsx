@@ -26,6 +26,7 @@ import { LocalMap } from "@/components/local-map";
 import { Logo } from "@/components/logo";
 import { HarvestListing, Listing, harvestListings, listings as initialListings } from "@/lib/data";
 import { ProduceIcon } from "@/components/produce-icon";
+import { ProducePhoto } from "@/components/produce-photo";
 
 type View = "feed" | "map" | "harvest";
 
@@ -450,8 +451,14 @@ function CropDetailDrawer({
 
         {!claimed ? (
           <div>
-            <div className="flex gap-4">
-              <ProduceIcon category={listing.category} accent={listing.accent} size="lg" />
+            <div className="overflow-hidden rounded-[1.4rem] bg-sand shadow-card">
+              <div className="h-48 w-full">
+                <ProducePhoto listing={listing} />
+              </div>
+            </div>
+
+            <div className="mt-5 flex gap-4">
+              <ProduceIcon category={listing.category} accent={listing.accent} />
               <div className="min-w-0 flex-1">
                 <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-leaf">
                   {listing.sourceType}

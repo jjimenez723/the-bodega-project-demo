@@ -12,6 +12,39 @@ const categories: { value: CropCategory; label: string; icon: typeof Leaf; accen
   { value: "fruit", label: "Fruit", icon: Apple, accent: "bg-[#F3DBD8]" },
 ];
 
+const categoryPhotos: Record<CropCategory, Pick<Listing, "imageQuery" | "imageFallback" | "imageAlt">> = {
+  greens: {
+    imageQuery: "fresh leafy greens produce",
+    imageFallback:
+      "https://images.unsplash.com/photo-1524179091875-bf99a9a6af57?auto=format&fit=crop&w=900&q=85",
+    imageAlt: "Fresh leafy greens",
+  },
+  tomatoes: {
+    imageQuery: "fresh tomatoes produce",
+    imageFallback:
+      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=900&q=85",
+    imageAlt: "Fresh tomatoes",
+  },
+  herbs: {
+    imageQuery: "fresh herbs produce",
+    imageFallback:
+      "https://images.unsplash.com/photo-1618164435735-413d3b066c9a?auto=format&fit=crop&w=900&q=85",
+    imageAlt: "Fresh herbs",
+  },
+  roots: {
+    imageQuery: "root vegetables produce",
+    imageFallback:
+      "https://images.unsplash.com/photo-1445282768818-728615cc910a?auto=format&fit=crop&w=900&q=85",
+    imageAlt: "Fresh root vegetables",
+  },
+  fruit: {
+    imageQuery: "fresh fruit produce",
+    imageFallback:
+      "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=900&q=85",
+    imageAlt: "Fresh fruit",
+  },
+};
+
 export function AddHarvestModal({
   open,
   onClose,
@@ -47,6 +80,7 @@ export function AddHarvestModal({
       price: donation ? null : Number(form.get("price")) || 0,
       sourceType: "Community listing",
       accent: catObj?.accent || "bg-[#DDEFD5]",
+      ...categoryPhotos[selectedCategory],
     });
     onClose();
   }

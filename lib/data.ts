@@ -11,6 +11,9 @@ export type Listing = {
   price: number | null;
   sourceType: string;
   accent: string;
+  imageQuery: string;
+  imageFallback: string;
+  imageAlt: string;
   claimed?: boolean;
 };
 
@@ -51,6 +54,10 @@ export const listings: Listing[] = [
     price: 3,
     sourceType: "Bodega rooftop",
     accent: "bg-[#F8D8C7]",
+    imageQuery: "fresh hydroponic tomatoes",
+    imageFallback:
+      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=900&q=85",
+    imageAlt: "Fresh red tomatoes on the vine",
   },
   {
     id: 2,
@@ -63,6 +70,10 @@ export const listings: Listing[] = [
     price: null,
     sourceType: "Raised-bed garden",
     accent: "bg-[#DDEFD5]",
+    imageQuery: "fresh kale leaves",
+    imageFallback:
+      "https://images.unsplash.com/photo-1524179091875-bf99a9a6af57?auto=format&fit=crop&w=900&q=85",
+    imageAlt: "Fresh green kale leaves",
   },
   {
     id: 3,
@@ -75,6 +86,10 @@ export const listings: Listing[] = [
     price: null,
     sourceType: "Indoor hydroponics",
     accent: "bg-[#D8ECE0]",
+    imageQuery: "fresh basil herbs",
+    imageFallback:
+      "https://images.unsplash.com/photo-1618164435735-413d3b066c9a?auto=format&fit=crop&w=900&q=85",
+    imageAlt: "Fresh basil leaves",
   },
   {
     id: 4,
@@ -87,6 +102,10 @@ export const listings: Listing[] = [
     price: 2.5,
     sourceType: "Community garden",
     accent: "bg-[#F3E3C1]",
+    imageQuery: "rainbow carrots produce",
+    imageFallback:
+      "https://images.unsplash.com/photo-1445282768818-728615cc910a?auto=format&fit=crop&w=900&q=85",
+    imageAlt: "Colorful fresh carrots",
   },
   {
     id: 5,
@@ -99,6 +118,10 @@ export const listings: Listing[] = [
     price: 4,
     sourceType: "Home grower",
     accent: "bg-[#F3DBD8]",
+    imageQuery: "fresh strawberries",
+    imageFallback:
+      "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=900&q=85",
+    imageAlt: "Fresh ripe strawberries",
   },
 ];
 
