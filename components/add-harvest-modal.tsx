@@ -1,8 +1,16 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { X } from "lucide-react";
+import { Apple, Carrot, Cherry, Leaf, Sprout, X } from "lucide-react";
 import { CropCategory, Listing } from "@/lib/data";
+
+const categories: { value: CropCategory; label: string; icon: typeof Leaf; accent: string }[] = [
+  { value: "greens", label: "Greens", icon: Leaf, accent: "bg-[#DDEFD5]" },
+  { value: "tomatoes", label: "Tomatoes", icon: Cherry, accent: "bg-[#F8D8C7]" },
+  { value: "herbs", label: "Herbs", icon: Sprout, accent: "bg-[#D8ECE0]" },
+  { value: "roots", label: "Roots", icon: Carrot, accent: "bg-[#F3E3C1]" },
+  { value: "fruit", label: "Fruit", icon: Apple, accent: "bg-[#F3DBD8]" },
+];
 
 export function AddHarvestModal({
   open,
@@ -14,6 +22,7 @@ export function AddHarvestModal({
   onAdd: (listing: Listing) => void;
 }) {
   const [donation, setDonation] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState<CropCategory>("greens");
 
   if (!open) return null;
 
@@ -21,28 +30,34 @@ export function AddHarvestModal({
     event.preventDefault();
     const form = new FormData(event.currentTarget);
     const produce = String(form.get("produce"));
+    const quantity = String(form.get("quantity"));
+    const location = String(form.get("location"));
+    const pickupWindow = String(form.get("pickupWindow"));
+
+    const catObj = categories.find((c) => c.value === selectedCategory);
+
     onAdd({
       id: Date.now(),
       name: produce,
-      category: String(form.get("category")) as CropCategory,
-      quantity: String(form.get("quantity")),
-      location: String(form.get("location")),
+      category: selectedCategory,
+      quantity,
+      location,
       distance: "0.1 mi",
-      available: "Just added",
+      available: pickupWindow || "Available now",
       price: donation ? null : Number(form.get("price")) || 0,
       sourceType: "Community listing",
-      accent: "bg-[#DDEFD5]",
+      accent: catObj?.accent || "bg-[#DDEFD5]",
     });
     onClose();
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/35 p-0 backdrop-blur-md sm:items-center sm:p-5">
-      <div className="w-full max-w-lg rounded-t-[2rem] bg-cream p-5 shadow-2xl sm:rounded-[2rem]">
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-forest/40 p-0 backdrop-blur-sm sm:items-center sm:p-5">
+      <div className="w-full max-w-lg rounded-t-[2rem] bg-cream p-6 shadow-2xl sm:rounded-[2rem] border-t border-sand sm:border">
         <div className="flex items-start justify-between">
           <div>
-            <p className="text-sm font-semibold text-leaf">Grow the grid</p>
-            <h2 className="mt-1 text-3xl font-semibold tracking-tight text-forest">Add your harvest.</h2>
+            <p className="text-[10px] font-black uppercase tracking-[0.2rem] text-leaf">Grow the grid</p>
+            <h2 className="mt-1 text-2xl font-black text-forest">Add your harvest</h2>
             <p className="mt-1 text-sm text-forest/55">Share surplus with neighbors nearby.</p>
           </div>
           <button
@@ -54,57 +69,81 @@ export function AddHarvestModal({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="mt-5 space-y-3.5">
+        <form onSubmit={handleSubmit} className="mt-5 space-y-4">
           <div>
-            <label className="mb-1.5 block text-xs font-semibold text-forest">Produce type</label>
+            <label className="mb-1.5 block text-xs font-extrabold text-forest">Produce type</label>
             <input
               required
               name="produce"
               placeholder="e.g. Fresh collard greens"
-              className="w-full rounded-[0.9rem] border border-black/[0.08] bg-white px-3.5 py-3 text-sm outline-none transition placeholder:text-forest/25 focus:border-leaf"
+              className="w-full rounded-xl border border-sand bg-white px-3.5 py-3 text-sm outline-none transition placeholder:text-forest/25 focus:border-leaf"
             />
           </div>
+
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="mb-1.5 block text-xs font-semibold text-forest">Quantity</label>
+              <label className="mb-1.5 block text-xs font-extrabold text-forest">Quantity</label>
               <input
                 required
                 name="quantity"
                 placeholder="e.g. 5 lbs"
-                className="w-full rounded-[0.9rem] border border-black/[0.08] bg-white px-3.5 py-3 text-sm outline-none transition placeholder:text-forest/25 focus:border-leaf"
+                className="w-full rounded-xl border border-sand bg-white px-3.5 py-3 text-sm outline-none transition placeholder:text-forest/25 focus:border-leaf"
               />
             </div>
             <div>
-              <label className="mb-1.5 block text-xs font-semibold text-forest">Category</label>
-              <select
-                name="category"
-                className="w-full rounded-[0.9rem] border border-black/[0.08] bg-white px-3.5 py-3 text-sm outline-none transition focus:border-leaf"
-              >
-                <option value="greens">Greens</option>
-                <option value="tomatoes">Tomatoes</option>
-                <option value="herbs">Herbs</option>
-                <option value="roots">Roots</option>
-                <option value="fruit">Fruit</option>
-              </select>
+              <label className="mb-1.5 block text-xs font-extrabold text-forest">Pickup Window</label>
+              <input
+                required
+                name="pickupWindow"
+                placeholder="e.g. Today, 4-7 PM"
+                className="w-full rounded-xl border border-sand bg-white px-3.5 py-3 text-sm outline-none transition placeholder:text-forest/25 focus:border-leaf"
+              />
             </div>
           </div>
+
           <div>
-            <label className="mb-1.5 block text-xs font-semibold text-forest">Pickup location</label>
+            <label className="mb-1.5 block text-xs font-extrabold text-forest">Category</label>
+            <div className="flex flex-wrap gap-2">
+              {categories.map((cat) => {
+                const Icon = cat.icon;
+                const isSelected = selectedCategory === cat.value;
+                return (
+                  <button
+                    key={cat.value}
+                    type="button"
+                    onClick={() => setSelectedCategory(cat.value)}
+                    className={`flex items-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-bold transition-all duration-200 ${
+                      isSelected
+                        ? `${cat.accent} border-leaf text-forest shadow-sm scale-105`
+                        : "border-sand bg-white text-forest/65 hover:bg-cream"
+                    }`}
+                  >
+                    <Icon className="h-4 w-4" />
+                    {cat.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div>
+            <label className="mb-1.5 block text-xs font-extrabold text-forest">Pickup location</label>
             <input
               required
               name="location"
               placeholder="e.g. Springfield Ave Community Garden"
-              className="w-full rounded-[0.9rem] border border-black/[0.08] bg-white px-3.5 py-3 text-sm outline-none transition placeholder:text-forest/25 focus:border-leaf"
+              className="w-full rounded-xl border border-sand bg-white px-3.5 py-3 text-sm outline-none transition placeholder:text-forest/25 focus:border-leaf"
             />
           </div>
+
           <div>
-            <label className="mb-1.5 block text-xs font-semibold text-forest">Exchange type</label>
-            <div className="grid grid-cols-2 gap-2 rounded-full bg-white p-1 shadow-sm">
+            <label className="mb-1.5 block text-xs font-extrabold text-forest">Exchange type</label>
+            <div className="grid grid-cols-2 gap-2 rounded-xl bg-white p-1">
               <button
                 type="button"
                 onClick={() => setDonation(true)}
-                className={`rounded-full px-3 py-2.5 text-xs font-semibold transition ${
-                  donation ? "bg-leaf text-white" : "text-forest/45"
+                className={`rounded-lg px-3 py-2.5 text-xs font-black transition-all ${
+                  donation ? "bg-mint text-leaf shadow-sm" : "text-forest/45 hover:text-forest"
                 }`}
               >
                 Free donation
@@ -112,17 +151,18 @@ export function AddHarvestModal({
               <button
                 type="button"
                 onClick={() => setDonation(false)}
-                className={`rounded-full px-3 py-2.5 text-xs font-semibold transition ${
-                  !donation ? "bg-forest text-white" : "text-forest/45"
+                className={`rounded-lg px-3 py-2.5 text-xs font-black transition-all ${
+                  !donation ? "bg-[#F5E8C8] text-[#815B1B] shadow-sm" : "text-forest/45 hover:text-forest"
                 }`}
               >
                 Set a price
               </button>
             </div>
           </div>
+
           {!donation && (
             <div>
-              <label className="mb-1.5 block text-xs font-semibold text-forest">Price</label>
+              <label className="mb-1.5 block text-xs font-extrabold text-forest">Price</label>
               <div className="relative">
                 <span className="absolute left-3.5 top-3 text-sm font-bold text-forest/45">$</span>
                 <input
@@ -132,12 +172,13 @@ export function AddHarvestModal({
                   type="number"
                   name="price"
                   placeholder="0.00"
-                  className="w-full rounded-[0.9rem] border border-black/[0.08] bg-white py-3 pl-7 pr-3.5 text-sm outline-none transition placeholder:text-forest/25 focus:border-leaf"
+                  className="w-full rounded-xl border border-sand bg-white py-3 pl-7 pr-3.5 text-sm outline-none transition placeholder:text-forest/25 focus:border-leaf"
                 />
               </div>
             </div>
           )}
-          <button className="mt-2 w-full rounded-full bg-leaf py-3.5 text-sm font-semibold text-white transition hover:bg-[#0077ed] active:scale-[0.99]">
+
+          <button className="mt-2 w-full rounded-xl bg-forest py-3.5 text-sm font-extrabold text-white transition hover:bg-leaf active:scale-[0.99] shadow-md">
             Add harvest to the grid
           </button>
         </form>

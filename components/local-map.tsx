@@ -7,10 +7,65 @@ import { MapNode, MapNodeType, mapNodes } from "@/lib/data";
 
 const NEWARK_CENTER = { lat: 40.7357, lng: -74.1724 };
 const NODE_COLORS = {
-  bodega: "#A2845E",
-  grower: "#0071E3",
-  garden: "#34C759",
+  bodega: "#8C6042", // earth
+  grower: "#2F7548", // leaf
+  garden: "#E59F43", // warm orange/yellow
 } as const;
+
+const MAP_STYLES = [
+  {
+    elementType: "geometry",
+    stylers: [{ color: "#F8F6EE" }],
+  },
+  {
+    elementType: "labels.text.stroke",
+    stylers: [{ color: "#F8F6EE" }],
+  },
+  {
+    elementType: "labels.text.fill",
+    stylers: [{ color: "#173D2B" }],
+  },
+  {
+    featureType: "administrative.neighborhood",
+    elementType: "labels.text.fill",
+    stylers: [{ color: "#2F7548" }],
+  },
+  {
+    featureType: "landscape.natural",
+    elementType: "geometry",
+    stylers: [{ color: "#EAE4D7" }],
+  },
+  {
+    featureType: "poi",
+    elementType: "geometry",
+    stylers: [{ color: "#E2F2DF" }],
+  },
+  {
+    featureType: "poi",
+    elementType: "labels.text",
+    stylers: [{ visibility: "off" }],
+  },
+  {
+    featureType: "road",
+    elementType: "geometry",
+    stylers: [{ color: "#FFFFFF" }],
+  },
+  {
+    featureType: "road.highway",
+    elementType: "geometry",
+    stylers: [{ color: "#EAE4D7" }],
+  },
+  {
+    featureType: "water",
+    elementType: "geometry",
+    stylers: [{ color: "#CCE8CC" }],
+  },
+  {
+    featureType: "water",
+    elementType: "labels.text.fill",
+    stylers: [{ color: "#173D2B" }],
+  },
+];
 
 type MapStatus = "loading" | "ready" | "error";
 let configuredApiKey: string | undefined;
@@ -52,6 +107,7 @@ export function LocalMap() {
           streetViewControl: false,
           zoomControl: true,
           gestureHandling: "cooperative",
+          styles: MAP_STYLES,
         });
 
         mapInstance.current = map;

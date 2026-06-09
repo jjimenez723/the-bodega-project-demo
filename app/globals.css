@@ -44,6 +44,75 @@ button {
   animation: pulse-ring 2.4s ease-out infinite;
 }
 
+/* View Transitions configuration */
+header {
+  view-transition-name: main-header;
+}
+
+main section {
+  view-transition-name: main-content;
+}
+
+/* Modern Discrete Dialog and Popover Animations */
+dialog[open],
+[popover]:popover-open {
+  opacity: 1;
+  transform: translateY(0);
+
+  @starting-style {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+dialog,
+[popover] {
+  opacity: 0;
+  transform: translateY(100%);
+  transition-property: opacity, transform, display, overlay;
+  transition-duration: 0.35s;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  transition-behavior: allow-discrete;
+}
+
+dialog::backdrop,
+[popover]::backdrop {
+  background-color: rgba(23, 61, 43, 0);
+  backdrop-filter: blur(0px);
+  transition:
+    display 0.35s allow-discrete,
+    overlay 0.35s allow-discrete,
+    backdrop-filter 0.35s ease-out,
+    background-color 0.35s ease-out;
+}
+
+dialog[open]::backdrop,
+[popover]:popover-open::backdrop {
+  background-color: rgba(23, 61, 43, 0.45);
+  backdrop-filter: blur(4px);
+
+  @starting-style {
+    background-color: rgba(23, 61, 43, 0);
+    backdrop-filter: blur(0px);
+  }
+}
+
+/* Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  dialog,
+  [popover] {
+    transform: none;
+    transition-duration: 0.1s;
+  }
+  @starting-style {
+    dialog[open],
+    [popover]:popover-open {
+      transform: none;
+    }
+  }
+}
+
+
 ::selection {
   background: rgba(0, 113, 227, 0.18);
 }

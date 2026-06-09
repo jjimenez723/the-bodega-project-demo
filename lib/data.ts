@@ -11,6 +11,7 @@ export type Listing = {
   price: number | null;
   sourceType: string;
   accent: string;
+  claimed?: boolean;
 };
 
 export type MapNodeType = "bodega" | "grower" | "garden";

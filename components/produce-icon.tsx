@@ -27,7 +27,7 @@ export function ProduceIcon({
       } flex shrink-0 items-center justify-center border border-white/70 shadow-sm`}
     >
       <Icon
-        className={`${size === "lg" ? "h-10 w-10" : "h-8 w-8"} text-forest/80`}
+        className={`${size === "lg" ? "h-10 w-10" : "h-8 w-8"} text-forest transform group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300`}
         strokeWidth={1.7}
       />
     </div>
