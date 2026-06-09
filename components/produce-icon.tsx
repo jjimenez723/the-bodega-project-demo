@@ -23,11 +23,11 @@ export function ProduceIcon({
   return (
     <div
       className={`${accent} ${
-        size === "lg" ? "h-20 w-20 rounded-[1.5rem]" : "h-[74px] w-[74px] rounded-2xl"
-      } flex shrink-0 items-center justify-center`}
+        size === "lg" ? "h-20 w-20 rounded-[1.35rem]" : "h-[74px] w-[74px] rounded-[1.15rem]"
+      } flex shrink-0 items-center justify-center border border-white/70 shadow-sm`}
     >
       <Icon
-        className={`${size === "lg" ? "h-10 w-10" : "h-8 w-8"} text-forest`}
+        className={`${size === "lg" ? "h-10 w-10" : "h-8 w-8"} text-forest/80`}
         strokeWidth={1.7}
       />
     </div>

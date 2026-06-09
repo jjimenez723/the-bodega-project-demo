@@ -7,16 +7,15 @@
 }
 
 html {
-  background: #f8f6ee;
+  background: #f5f5f7;
 }
 
 body {
   min-height: 100vh;
   margin: 0;
-  color: #173d2b;
-  background:
-    radial-gradient(circle at 8% 2%, rgba(226, 242, 223, 0.9), transparent 24rem),
-    #f8f6ee;
+  color: #1d1d1f;
+  background: #f5f5f7;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
 }
 
 button,
@@ -45,6 +44,10 @@ button {
   animation: pulse-ring 2.4s ease-out infinite;
 }
 
+::selection {
+  background: rgba(0, 113, 227, 0.18);
+}
+
 /* View Transitions styling */
 header {
   view-transition-name: main-header;
@@ -57,4 +60,3 @@ aside, nav.fixed {
 main section {
   view-transition-name: main-content;
 }
-

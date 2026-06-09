@@ -7,15 +7,12 @@ export function Logo({ compact = false }: { compact?: boolean }) {
       <Image
         src={logo}
         alt="The Bodega Project"
-        className="h-12 w-12 rounded-full object-cover shadow-sm"
+        className="h-9 w-9 rounded-[10px] object-cover shadow-sm"
         priority
       />
       {!compact && (
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-leaf">
-            The
-          </p>
-          <p className="-mt-0.5 text-sm font-black tracking-tight text-forest">
+          <p className="text-[13px] font-semibold tracking-tight text-forest">
             Bodega Project
           </p>
         </div>

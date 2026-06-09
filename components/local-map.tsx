@@ -7,9 +7,9 @@ import { MapNode, MapNodeType, mapNodes } from "@/lib/data";
 
 const NEWARK_CENTER = { lat: 40.7357, lng: -74.1724 };
 const NODE_COLORS = {
-  bodega: "#8A4E2A",
-  grower: "#3F7C4D",
-  garden: "#E59F43",
+  bodega: "#A2845E",
+  grower: "#0071E3",
+  garden: "#34C759",
 } as const;
 
 type MapStatus = "loading" | "ready" | "error";
@@ -132,15 +132,15 @@ export function LocalMap() {
 
   return (
     <section className="pb-28">
-      <div className="mb-5">
-        <p className="text-xs font-black uppercase tracking-[0.18em] text-leaf">Node Mapping</p>
-        <h1 className="mt-1 text-3xl font-black tracking-tight text-forest">What&apos;s growing nearby</h1>
+      <div className="mb-6">
+        <p className="text-sm font-semibold text-leaf">Node Mapping</p>
+        <h1 className="mt-1 text-5xl font-semibold tracking-tight text-forest sm:text-6xl">What&apos;s growing nearby.</h1>
         <p className="mt-2 max-w-md text-sm leading-6 text-forest/60">
           Explore fresh surplus and neighborhood food nodes across Newark. Zoom in to explore your block.
         </p>
       </div>
 
-      <div className="relative h-[435px] overflow-hidden rounded-[1.75rem] border-4 border-white bg-[#E2E8D6] shadow-card">
+      <div className="relative h-[435px] overflow-hidden rounded-[1.75rem] border border-black/[0.04] bg-[#E9EEF5] shadow-card">
         {apiKey ? <div ref={mapElement} className="absolute inset-0" /> : <SampleMapPreview selectedNode={selectedNode} onSelect={selectNode} />}
 
         {apiKey && status === "loading" && <MapMessage title="Loading Newark map" detail="Drawing the city boundary..." />}
@@ -148,16 +148,16 @@ export function LocalMap() {
           <MapMessage title="Map unavailable" detail="Check the Google Maps key and try again." />
         )}
 
-        <div className="absolute left-3 top-3 rounded-xl bg-white/90 px-3 py-2 shadow-sm backdrop-blur">
-          <p className="text-[10px] font-black uppercase tracking-[0.14em] text-leaf">Newark, NJ</p>
-          <p className="text-xs font-bold text-forest">City boundary</p>
+        <div className="absolute left-3 top-3 rounded-2xl bg-white/85 px-3 py-2 shadow-sm backdrop-blur-xl">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-leaf">Newark, NJ</p>
+          <p className="text-xs font-semibold text-forest">City boundary</p>
         </div>
 
         {apiKey && status === "ready" && (
           <button
             aria-label="Fit Newark city boundary"
             onClick={fitNewarkBoundary}
-            className="absolute bottom-6 right-3 flex h-10 w-10 items-center justify-center rounded-xl bg-white text-forest shadow-md transition hover:bg-mint"
+            className="absolute bottom-6 right-3 flex h-10 w-10 items-center justify-center rounded-full bg-white text-forest shadow-md transition hover:bg-mint"
           >
             <Navigation className="h-4 w-4" fill="currentColor" />
           </button>
@@ -168,7 +168,7 @@ export function LocalMap() {
             href="https://www.openstreetmap.org/copyright"
             target="_blank"
             rel="noreferrer"
-            className="absolute bottom-1 left-2 rounded bg-white/80 px-1.5 py-0.5 text-[9px] font-bold text-forest/65"
+            className="absolute bottom-1 left-2 rounded bg-white/80 px-1.5 py-0.5 text-[9px] font-medium text-forest/65"
           >
             Boundary data © OpenStreetMap contributors
           </a>
@@ -181,8 +181,8 @@ export function LocalMap() {
         <MapStat icon={Users} value="18" label="Neighbors" />
       </div>
 
-      <div className="mt-5 rounded-2xl border border-sand bg-white/70 px-4 py-3">
-        <div className="flex flex-wrap gap-x-4 gap-y-2 text-[11px] font-bold text-forest/60">
+      <div className="mt-5 rounded-[1.25rem] border border-black/[0.04] bg-white px-4 py-3 shadow-sm">
+        <div className="flex flex-wrap gap-x-4 gap-y-2 text-[11px] font-semibold text-forest/60">
           <Legend color="bg-leaf" label="Grower" />
           <Legend color="bg-earth" label="Bodega" />
           <Legend color="bg-[#E59F43]" label="Garden" />
@@ -190,16 +190,16 @@ export function LocalMap() {
       </div>
 
       <div className="mt-7 flex items-center justify-between">
-        <h2 className="text-lg font-black text-forest">Sample food nodes</h2>
-        <p className="text-xs font-bold text-forest/45">{mapNodes.length} mapped</p>
+        <h2 className="text-xl font-semibold text-forest">Sample food nodes</h2>
+        <p className="text-xs font-medium text-forest/45">{mapNodes.length} mapped</p>
       </div>
       <div className="mt-3 grid gap-2 sm:grid-cols-2">
         {mapNodes.map((node) => (
           <button
             key={node.id}
             onClick={() => selectNode(node)}
-            className={`rounded-2xl border bg-white/80 p-3 text-left transition hover:border-leaf/40 hover:bg-white ${
-              node.id === selectedNodeId ? "border-leaf/50 shadow-card" : "border-white"
+            className={`rounded-[1.25rem] border bg-white p-3 text-left transition hover:border-leaf/40 ${
+              node.id === selectedNodeId ? "border-leaf/50 shadow-card" : "border-black/[0.04] shadow-sm"
             }`}
           >
             <div className="flex items-start gap-2.5">
@@ -211,7 +211,7 @@ export function LocalMap() {
                 <span className="block text-[10px] font-black uppercase tracking-[0.14em] text-leaf">
                   {formatNodeType(node.type)}
                 </span>
-                <span className="mt-0.5 block text-sm font-extrabold text-forest">{node.label}</span>
+                <span className="mt-0.5 block text-sm font-semibold text-forest">{node.label}</span>
                 <span className="mt-1 block text-xs leading-4 text-forest/50">{node.detail}</span>
               </span>
             </div>
@@ -309,7 +309,7 @@ function SampleMapPreview({
   onSelect: (node: MapNode) => void;
 }) {
   return (
-    <div className="absolute inset-0 overflow-hidden bg-[#E2E8D6]">
+    <div className="absolute inset-0 overflow-hidden bg-[#E9EEF5]">
       <div className="absolute left-[8%] top-[15%] h-[1px] w-[92%] rotate-[18deg] bg-white/65" />
       <div className="absolute -left-[8%] top-[37%] h-[2px] w-[120%] -rotate-[12deg] bg-white/70" />
       <div className="absolute -left-[2%] top-[62%] h-[1px] w-[112%] rotate-[7deg] bg-white/70" />
@@ -339,19 +339,19 @@ function SampleMapPreview({
         </button>
       ))}
 
-      <div className="absolute bottom-3 left-3 right-3 rounded-2xl bg-white/95 p-3 shadow-md backdrop-blur">
+      <div className="absolute bottom-3 left-3 right-3 rounded-[1.35rem] bg-white/90 p-3 shadow-md backdrop-blur-xl">
         <div className="flex items-start gap-2.5">
           <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-leaf" />
           <div>
-            <p className="text-[10px] font-black uppercase tracking-[0.14em] text-leaf">
-              Sample map preview · {formatNodeType(selectedNode.type)}
+            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-leaf">
+              Sample map preview - {formatNodeType(selectedNode.type)}
             </p>
-            <p className="mt-0.5 text-sm font-black text-forest">{selectedNode.label}</p>
+            <p className="mt-0.5 text-sm font-semibold text-forest">{selectedNode.label}</p>
             <p className="text-xs text-forest/55">{selectedNode.address}</p>
             <p className="mt-1 text-xs text-forest/70">{selectedNode.detail}</p>
           </div>
         </div>
-        <p className="mt-2 border-t border-sand pt-2 text-[10px] font-bold text-forest/45">
+        <p className="mt-2 border-t border-sand pt-2 text-[10px] font-medium text-forest/45">
           Set NEXT_PUBLIC_GOOGLE_MAPS_API_KEY for the live street map.
         </p>
       </div>
@@ -365,10 +365,10 @@ function formatNodeType(type: MapNodeType) {
 
 function MapMessage({ title, detail }: { title: string; detail: string }) {
   return (
-    <div className="absolute inset-0 flex items-center justify-center bg-[#E2E8D6]/95 px-6 text-center">
+    <div className="absolute inset-0 flex items-center justify-center bg-[#E9EEF5]/95 px-6 text-center">
       <div className="max-w-xs">
         <Sprout className="mx-auto h-7 w-7 text-leaf" />
-        <p className="mt-3 text-sm font-black text-forest">{title}</p>
+        <p className="mt-3 text-sm font-semibold text-forest">{title}</p>
         <p className="mt-1 text-xs leading-5 text-forest/60">{detail}</p>
       </div>
     </div>
@@ -385,10 +385,10 @@ function MapStat({
   label: string;
 }) {
   return (
-    <div className="rounded-2xl bg-white p-3 shadow-card">
+    <div className="rounded-[1.25rem] border border-black/[0.04] bg-white p-3 shadow-card">
       <Icon className="h-4 w-4 text-leaf" />
-      <p className="mt-3 text-xl font-black text-forest">{value}</p>
-      <p className="text-[11px] font-bold uppercase tracking-wide text-forest/45">{label}</p>
+      <p className="mt-3 text-xl font-semibold text-forest">{value}</p>
+      <p className="text-[11px] font-semibold uppercase tracking-wide text-forest/45">{label}</p>
     </div>
   );
 }

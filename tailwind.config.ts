@@ -8,16 +8,16 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        forest: "#173D2B",
-        leaf: "#2F7548",
-        mint: "#E2F2DF",
-        cream: "#F8F6EE",
-        sand: "#EAE4D7",
-        earth: "#8C6042",
+        forest: "#1D1D1F",
+        leaf: "#0071E3",
+        mint: "#E8F3FF",
+        cream: "#F5F5F7",
+        sand: "#D2D2D7",
+        earth: "#A2845E",
       },
       boxShadow: {
-        card: "0 10px 30px rgba(25, 61, 43, 0.08)",
-        float: "0 12px 25px rgba(23, 61, 43, 0.28)",
+        card: "0 18px 44px rgba(0, 0, 0, 0.08)",
+        float: "0 18px 34px rgba(0, 113, 227, 0.28)",
       },
     },
   },
