@@ -44,3 +44,17 @@ button {
 .map-ring {
   animation: pulse-ring 2.4s ease-out infinite;
 }
+
+/* View Transitions styling */
+header {
+  view-transition-name: main-header;
+}
+
+aside, nav.fixed {
+  view-transition-name: navigation-bar;
+}
+
+main section {
+  view-transition-name: main-content;
+}
+

@@ -26,9 +26,19 @@ export function BodegaApp() {
   const [modalOpen, setModalOpen] = useState(false);
   const [listings, setListings] = useState<Listing[]>(initialListings);
 
+  function handleViewChange(newView: View) {
+    if (typeof document !== "undefined" && "startViewTransition" in document) {
+      (document as any).startViewTransition(() => {
+        setView(newView);
+      });
+    } else {
+      setView(newView);
+    }
+  }
+
   function addListing(listing: Listing) {
     setListings((current) => [listing, ...current]);
-    setView("feed");
+    handleViewChange("feed");
   }
 
   return (
@@ -50,13 +60,13 @@ export function BodegaApp() {
       <div className="mx-auto flex max-w-6xl gap-8 px-4 pb-20 pt-5 sm:px-6 lg:pt-7">
         <aside className="hidden w-52 shrink-0 lg:block">
           <nav className="sticky top-24 space-y-1.5">
-            <DesktopNav label="Feed" icon={Home} active={view === "feed"} onClick={() => setView("feed")} />
-            <DesktopNav label="Local Map" icon={Map} active={view === "map"} onClick={() => setView("map")} />
+            <DesktopNav label="Feed" icon={Home} active={view === "feed"} onClick={() => handleViewChange("feed")} />
+            <DesktopNav label="Local Map" icon={Map} active={view === "map"} onClick={() => handleViewChange("map")} />
             <DesktopNav
               label="My Harvest"
               icon={PackageOpen}
               active={view === "harvest"}
-              onClick={() => setView("harvest")}
+              onClick={() => handleViewChange("harvest")}
             />
             <div className="mt-8 rounded-2xl bg-forest p-4 text-white">
               <Sprout className="h-5 w-5 text-mint" />
@@ -89,9 +99,9 @@ export function BodegaApp() {
 
       <nav className="fixed bottom-0 left-0 right-0 z-30 border-t border-sand bg-cream/95 px-3 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur-xl lg:hidden">
         <div className="mx-auto flex max-w-sm justify-around">
-          <MobileNav label="Feed" icon={Home} active={view === "feed"} onClick={() => setView("feed")} />
-          <MobileNav label="Local Map" icon={Map} active={view === "map"} onClick={() => setView("map")} />
-          <MobileNav label="My Harvest" icon={PackageOpen} active={view === "harvest"} onClick={() => setView("harvest")} />
+          <MobileNav label="Feed" icon={Home} active={view === "feed"} onClick={() => handleViewChange("feed")} />
+          <MobileNav label="Local Map" icon={Map} active={view === "map"} onClick={() => handleViewChange("map")} />
+          <MobileNav label="My Harvest" icon={PackageOpen} active={view === "harvest"} onClick={() => handleViewChange("harvest")} />
         </div>
       </nav>
 
